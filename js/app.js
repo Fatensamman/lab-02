@@ -6,7 +6,8 @@ $(document).ready(function () {
 	$.ajax('./../data/page-1.json').then((data) => {
 		data.forEach((element) => {
 			let newBox = new Box(element);
-			keywords.push(newBox.keyword);
+            if(keywords.indexOf(newBox.keyword) == -1){
+			keywords.push(newBox.keyword);}
 			newBox.render();
 		});
 
