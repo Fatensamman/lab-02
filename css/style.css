@@ -1,0 +1,67 @@
+@import url(base.css);
+body {
+    width: 100%;
+    margin: 0px auto;
+}
+header {
+    background-color:  rgb(68, 26, 68);
+    height: 120px;
+    color:  rgb(245, 237, 133);
+    text-align: center;
+}
+main{
+    width: 1050px;
+    margin: 60px auto;
+}
+h1{
+    font-size: 50px;
+    line-height: 120px;
+}
+.Item{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-row-gap: 30px;
+    
+    
+}
+.template-div{
+    width: 320px;
+    height: 450px;
+    border: 2px solid rgb(68, 26, 68);
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: rgb(245, 237, 133);
+}
+
+img{
+    width: 300px;
+    border: 0px;
+    border-radius: 10px;
+}
+
+h2 , p {
+    margin: 15px 0px 15px 10px;
+    color:rgb(68, 26, 68) ;
+}
+
+h2 {
+    font-size:25px;
+    font-weight: bold;
+}
+p{
+    font-size: 20px;
+}
+.template-div img:nth-child(11){
+    height: 300px;
+}
+
+footer{
+    width: 100%;
+    height: 90px;
+    background-color:rgb(68, 26, 68);
+    color:rgb(245, 237, 133) ;
+    font-size: 17px;
+    text-align: center;
+    line-height: 90px;
+}
