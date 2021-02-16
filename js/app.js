@@ -1,99 +1,95 @@
 'use strict';
 
-const keywords = [];
+let keywords = [];
+const gallary = [];
+pages();
 
-$(document).ready(function () {
-	$.ajax('./../data/page-1.json').then((data) => {
-		data.forEach((element) => {
-			let newBox = new Box(element);
-			keywords.push(newBox.keyword);
-			newBox.render();
-		});
-
-		keywords.forEach((keyword) => {
-			$('select').append(`
-	        <option value=${keyword}>${keyword}</option>`);
-		});
-	});
-});
+$('.selectt').on('change', function () {
+    $('.template-div').hide();
+    let selected = $(this).val();
+    $(`.${selected}`).fadeIn(800);
+})
 
 function Box(elem) {
-	this.image_url = elem.image_url;
-	this.title = elem.title;
-	this.description = elem.description;
-	this.keyword = elem.keyword;
-	this.horns = elem.horns;
+    this.image_url = elem.image_url;
+    this.title = elem.title;
+    this.description = elem.description;
+    this.keyword = elem.keyword;
+    this.horns = elem.horns;
+    gallary.push(this);
 }
 
-Box.prototype.render = function () {
-	$('.Item').append(
-        `<div class = "template-div">
-		<h2>${this.title}</h2>
-        <img src=${this.image_url} alt=${this.title}>
-        <p>${this.description}</p></div>`,
-	);
+Box.prototype.toHtml = function () {
+    let template = $('#container').html();
+    // console.log(this);
+    let newObj = Mustache.render(template, this);
+    $('.Item').append(newObj)
+}
+
+function toGetData(url) {
+    keywords = [];
+    // $(document).ready(function () {
+    $.ajax(url).then((data) => {
+        data.forEach((element) => {
+            let newBox = new Box(element);
+            newBox.toHtml();
+            if (keywords.indexOf(newBox.keyword.toLowerCase()) === -1) {
+                keywords.push(newBox.keyword);
+            }
+        });
+        keywords.forEach((keyword) => {
+            $('.selectt').append(`
+                <option value=${keyword}>${keyword}</option>`);
+        });
+    });
+    // });
+}
+
+function pages() {
+    toGetData('./../data/page-1.json');
+
+    $('#1').on('click', function () {
+        $('.Item').html('');
+        // $('.template-div').hide();
+        $('.selectt').children().remove().end().append(`<option value="default">Filter by Keyword</option>`);
+        toGetData('./../data/page-1.json');
+    });
+    $('#2').on('click', function () {
+        $('.Item').html('');
+        // $('.template-div').hide();
+        $('.selectt').children().remove().end().append(`<option value="default">Filter by Keyword</option>`);
+        toGetData('./../data/page-2.json');
+    });
 };
-// 'use strict';
 
+$('.sort-by').on('change', function () {
+    $('.Item').html('');
+    let option = $(this).val()
+    if (option === 'byTitle') {
+    }
 
-// let keywords = [];
+})
+// function sorting() {
+gallary.sort((a, b) => {
 
-// $(document).ready(function() {
-//     $.ajax('./../data/page-1.json')
-//     .then(data => {
-//         data.forEach((element,i) => {
-//             let newBox =  new box(element);
-//             newBox.render();
-//             // keywords.push(element.keyword)
-
-//         });
-//     })
-// })
-
-// $.ajax('./../data/page-1.json')
-//     .then(data => {
-//         data.forEach((element,i) => {
-//             let newBox =  new box(element);
-//             newBox.render();
-//             // keywords.push(element.keyword)
-
-//         });
-//     })
-
-
-// function box(elem) {
-//     this.image_url =elem.image_url;
-//     this.title = elem.title,
-//     this.description = elem.description,
-//     this.keyword = elem.keyword,
-//     this.horns = elem.horns
-//     keywords.push(this.keyword)
+    if (a.horns < b.horns) {
+        return -1;
+    }
+    else if (a.horns > b.horns)
+        return 1;
+    else return 0;
+})
 // }
-
-// box.prototype.render = function () {
-//     $('.Item').append(
-//         `<h2>${this.title}</h2>
-//         <img src=${this.image_url} alt="">
-//         <p>${this.description}</p>`
-//     )
-// };
-
-// // $(document).ready(function() {
-//     keywords.forEach(keyword => {
-//         $('.selectt').append(`
-//             <option value=${keyword}>${keyword}</option>`
-//         );
-//     })
-// // })
-
-
-
-// console.log(keywords);
-
-// // for(let i=0; i<keywords.length;i++){
-// //     console.log(keywords[i]);
-// //     // console.log(i)
-// // }
-
-
-
+// sorting()
+console.log(gallary);
+function sorting() {
+    gallary.sort((a, b) => {
+        if (b.title.toUpperCase() < a.title.toUpperCase()) {
+            return 1;
+        }
+        else if (b.title.toUpperCase() > a.title.toUpperCase())
+            return -1;
+        else return 0;
+    })
+}
+console.log(gallary)
