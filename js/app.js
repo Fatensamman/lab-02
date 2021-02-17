@@ -62,27 +62,34 @@ function pages() {
     });
 };
 
-$('.sort-by').on('change', function () {
+$('#title').on('change', function () {
     $('.Item').html('');
     let option = $(this).val()
     if (option === 'byTitle') {
-    }
-
+        sortByTitle();
+    } else if (option === 'byHorns'){
+        sortByhorns();
+    };
 })
 // function sorting() {
-gallary.sort((a, b) => {
+function sortByhorns() {
+    gallary.sort((a, b) => {
 
-    if (a.horns < b.horns) {
-        return -1;
-    }
-    else if (a.horns > b.horns)
-        return 1;
-    else return 0;
-})
-// }
-// sorting()
+        if (a.horns < b.horns) {
+            return -1;
+        }
+        else if (a.horns > b.horns)
+            return 1;
+        else return 0;
+    });
+    $('.Item').html('');
+    gallary.forEach(element => {
+        element.toHtml();
+    });
+}
+
 console.log(gallary);
-function sorting() {
+function sortByTitle() {
     gallary.sort((a, b) => {
         if (b.title.toUpperCase() < a.title.toUpperCase()) {
             return 1;
@@ -90,6 +97,10 @@ function sorting() {
         else if (b.title.toUpperCase() > a.title.toUpperCase())
             return -1;
         else return 0;
-    })
+    });
+    $('.Item').html('');
+    gallary.forEach(element => {
+        element.toHtml();
+    });
 }
 console.log(gallary)
