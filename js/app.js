@@ -66,9 +66,10 @@ $('#title').on('change', function () {
     $('.Item').html('');
     let option = $(this).val()
     if (option === 'byTitle') {
-        sortByTitle()
-    }
-
+        sortByTitle();
+    } else if (option === 'byHorns'){
+        sortByhorns();
+    };
 })
 // function sorting() {
 function sortByhorns() {
@@ -81,7 +82,7 @@ function sortByhorns() {
             return 1;
         else return 0;
     });
-    $('Item').html('');
+    $('.Item').html('');
     gallary.forEach(element => {
         element.toHtml();
     });
@@ -97,7 +98,7 @@ function sortByTitle() {
             return -1;
         else return 0;
     });
-    $('Item').html('');
+    $('.Item').html('');
     gallary.forEach(element => {
         element.toHtml();
     });
