@@ -23,7 +23,7 @@ Box.prototype.toHtml = function () {
     let template = $('#container').html();
     // console.log(this);
     let newObj = Mustache.render(template, this);
-    $('.Item').append(newObj)
+    $('.section').append(newObj)
 }
 
 function toGetData(url) {
@@ -49,25 +49,25 @@ function pages() {
     toGetData('./../data/page-1.json');
 
     $('#1').on('click', function () {
-        $('.Item').html('');
+        $('.section').html('');
         // $('.template-div').hide();
         $('.selectt').children().remove().end().append(`<option value="default">Filter by Keyword</option>`);
         toGetData('./../data/page-1.json');
     });
     $('#2').on('click', function () {
-        $('.Item').html('');
+        $('.section').html('');
         // $('.template-div').hide();
         $('.selectt').children().remove().end().append(`<option value="default">Filter by Keyword</option>`);
         toGetData('./../data/page-2.json');
     });
 };
 
-$('#title').on('change', function () {
-    $('.Item').html('');
+$('.sort-by').on('change', function () {
+    $('.section').html('');
     let option = $(this).val()
-    if (option === 'byTitle') {
+    if (option == 'Title') {
         sortByTitle();
-    } else if (option === 'byHorns'){
+    } else if (option == 'Horns'){
         sortByhorns();
     };
 })
@@ -82,13 +82,12 @@ function sortByhorns() {
             return 1;
         else return 0;
     });
-    $('.Item').html('');
+    $('.section').html('');
     gallary.forEach(element => {
         element.toHtml();
     });
 }
 
-console.log(gallary);
 function sortByTitle() {
     gallary.sort((a, b) => {
         if (b.title.toUpperCase() < a.title.toUpperCase()) {
@@ -98,9 +97,9 @@ function sortByTitle() {
             return -1;
         else return 0;
     });
-    $('.Item').html('');
+    $('.section').html('');
     gallary.forEach(element => {
         element.toHtml();
     });
 }
-console.log(gallary)
+
